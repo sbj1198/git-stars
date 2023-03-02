@@ -4,6 +4,7 @@ import lang from "../utils/lang";
 import { useSelector } from "react-redux";
 
 export const Filter = () => {
+  const [filter, setFilter] = useState({});
   const repos = useSelector((store) => store.repos);
   return (
     <Box mr="10px" minW="300px" maxW="300px">

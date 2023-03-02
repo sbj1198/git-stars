@@ -44,6 +44,7 @@ function App() {
         <Grid
           templateColumns="repeat(4, auto)"
           justifyContent="center"
+          columnGap="10px"
           pb="20px"
         >
           {repos.map((repo) => {
