@@ -3,18 +3,29 @@ import { FaRegListAlt } from "react-icons/fa";
 import { RxViewGrid } from "react-icons/rx";
 import React from "react";
 
-export const ViewSelector = () => {
+export const ViewSelector = ({ view, viewHandler }) => {
   return (
     <Box>
-      <Flex border="1px solid white">
-        <Box>
-          <Tag variant="solid" size="lg">
+      <Flex border="1px solid black">
+        <Box _hover={{ cursor: "pointer" }}>
+          <Tag
+            onClick={() => viewHandler("List")}
+            variant="solid"
+            size="lg"
+            borderRadius="none"
+            borderRight="1px solid black"
+          >
             <TagLeftIcon as={FaRegListAlt} />
             <TagLabel>List</TagLabel>
           </Tag>
         </Box>
-        <Box>
-          <Tag variant="solid" size="lg">
+        <Box _hover={{ cursor: "pointer" }}>
+          <Tag
+            onClick={() => viewHandler("Grid")}
+            variant="solid"
+            size="lg"
+            borderRadius="none"
+          >
             <TagLeftIcon as={RxViewGrid} />
             <TagLabel>Grid</TagLabel>
           </Tag>

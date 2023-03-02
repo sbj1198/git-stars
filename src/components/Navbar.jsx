@@ -6,8 +6,8 @@ export const Navbar = () => {
     <Flex
       boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
       justifyContent="flex-end"
+      p="10px 30px"
       alignItems="center"
-      p="10px 60px"
     >
       <Box>
         <Flex>
