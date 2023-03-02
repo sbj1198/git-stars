@@ -1,5 +1,9 @@
 const lang = [
   {
+    label: "All Languages",
+    value: "",
+  },
+  {
     label: "ABAP",
     value: "ABAP",
   },
