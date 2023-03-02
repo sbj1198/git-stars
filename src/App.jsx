@@ -1,8 +1,16 @@
-import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+} from "@chakra-ui/react";
 import { Navbar } from "./components/Navbar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRepos } from "./redux/action";
 import { RepoCard } from "./components/RepoCard";
 import { ViewSelector } from "./components/ViewSelector";
@@ -13,12 +21,19 @@ function App() {
   const [filter, setFilter] = useState({});
   const [filterData, setFilterData] = useState([]);
   const [view, setView] = useState("");
+  const [current, setCurrent] = useState(1);
+  const temp = useRef(current);
+  const totalCount = 885828;
 
   const handleFilter = (e) => {
     const { name, value } = e.target;
     setFilter({
       [name]: value,
     });
+  };
+
+  const paginationHandler = (val) => {
+    setCurrent((prev) => prev + val);
   };
 
   const filterRepos = () => {
@@ -57,13 +72,14 @@ function App() {
   };
 
   useEffect(() => {
-    if (!repos.length) {
-      dispatch(getRepos());
+    if (!repos.length || temp.current !== current) {
+      temp.current = current;
+      dispatch(getRepos(current));
     }
     if (Object.keys(filter).length !== 0) {
       filterRepos();
     }
-  }, [filter]);
+  }, [filter, current]);
 
   return (
     <Box mb="20px">
@@ -95,29 +111,30 @@ function App() {
           {filterCondition()}
         </Grid>
       )}
+      <Flex justifyContent="center" alignItems="center">
+        <Button
+          isDisabled={current === 1}
+          variant="outline"
+          mr="10px"
+          colorScheme="cyan"
+          onClick={() => paginationHandler(-1)}
+        >
+          Previous
+        </Button>
+        <Badge fontSize="xl" p="0 10px">
+          {current}
+        </Badge>
+        <Button
+          variant="outline"
+          ml="10px"
+          colorScheme="cyan"
+          onClick={() => paginationHandler(+1)}
+        >
+          Next
+        </Button>
+      </Flex>
     </Box>
   );
 }
 
 export default App;
-
-// {filterData.length !== 0
-//   ? filterData.map((item) => {
-//       return (
-//         <GridItem key={item.id} pt="20px">
-//           <RepoCard repo={item} />
-//         </GridItem>
-//       );
-//     })
-//   : filterData.length ===
-//     0(
-//       <Text mt="60px" as="b">
-//         No matching Language found!
-//       </Text>
-//     ) ?  repos.map((repo) => {
-//       return (
-//         <GridItem key={repo.id} pt="20px">
-//           <RepoCard repo={repo} />
-//         </GridItem>
-//       );
-//     })}
